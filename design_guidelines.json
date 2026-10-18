@@ -1,0 +1,126 @@
+{
+  "project_context": {
+    "name": "1º Encontro Vila Família Landing Page",
+    "tone": "Welcoming, premium, affective, contemporary",
+    "theme": "Light theme preferred to enhance the warm, golden-hour, daytime family vibe.",
+    "target_audience": "Families, parents, and children in Vila Velha/ES, Brazil."
+  },
+  "typography": {
+    "instructions_to_main_agent": "Use rounded, modern, legible typography for headings (Nunito). Do NOT use Inter for headings. Use DM Sans for body text.",
+    "fonts": {
+      "heading": "Nunito",
+      "body": "DM Sans",
+      "accent": "Caveat"
+    },
+    "hierarchy": {
+      "h1": "text-5xl sm:text-6xl font-black tracking-tighter leading-[1.1]",
+      "h2": "text-4xl sm:text-5xl font-bold tracking-tight leading-[1.2]",
+      "h3": "text-2xl sm:text-3xl font-semibold leading-snug",
+      "body": "text-base sm:text-lg leading-relaxed",
+      "overline": "text-sm font-bold tracking-[0.2em] uppercase"
+    }
+  },
+  "colors": {
+    "instructions_to_main_agent": "Palette derived from Vila Família logo. Use these exact hex values. Avoid pure white/black. Implement high contrast and emotional storytelling.",
+    "palette": {
+      "background": "#F9F6F0",
+      "text_primary": "#33261D",
+      "text_secondary": "#6F4E37",
+      "deep_green": "#1E4231",
+      "terracotta": "#C35A42",
+      "warm_yellow": "#E5A836",
+      "brown": "#5C4033",
+      "cream": "#F9F6F0"
+    }
+  },
+  "visual_enhancers": {
+    "textures": "Include a subtle CSS or SVG film grain/noise overlay (`pointer-events-none`, fixed, low opacity).",
+    "shapes": "Organic discreet shapes (blobs or soft rounded corners, `rounded-[32px]` or `rounded-[40px]`).",
+    "cursor": "Implement a custom cursor (e.g., a solid terracotta dot that expands on hover) using Framer Motion. Keep it hidden on mobile.",
+    "surface": "Solid backgrounds with crisp organic shapes. Avoid heavy glassmorphism for this warm vibe; instead use subtle inner shadows and soft ambient shadows. DO NOT use complete transparent backgrounds behind text overlays or headers."
+  },
+  "motion": {
+    "libraries": ["gsap", "framer-motion", "lenis"],
+    "hero_scroll_scrub": {
+      "description": "Pinned 100vh cinematic hero over ~350vh scroll distance. Use GSAP ScrollTrigger to tie video.currentTime to scroll progress.",
+      "stages": [
+        { "progress": "0-20%", "action": "Stage 01: Logo Vila Família, title, subtitle, info, CTA button visible. HTML overlay must have a dark/warm tint (e.g., bg-black/40) to ensure readability." },
+        { "progress": "20-45%", "action": "Stage 02: Hero text smoothly fades out. Video camera continues moving." },
+        { "progress": "45-75%", "action": "Stage 03: Video continues to scrub, revealing the mom and boy." },
+        { "progress": "75-100%", "action": "Stage 04: Last frame of the video stable. Right-side content container fades in: Title, Subtitle, and 3 Info cards." }
+      ]
+    },
+    "micro_interactions": "Use Framer Motion for button hovers (scale up slightly, color shift), a slow editorial marquee for transitions (using react-fast-marquee), and masked line-by-line title reveals. Add a rotating circular badge."
+  },
+  "layouts": {
+    "instructions_to_main_agent": "Generous spacing (`py-24` or `py-32`). Avoid center-everything disease. Use asymmetrical Bento grids or overlapping elements where appropriate. File extensions must be .js or .jsx, NOT .tsx.",
+    "sections": [
+      {
+        "id": "hero",
+        "name": "Cinematic Video Hero",
+        "type": "pinned_scroll",
+        "elements": [
+          "Video Background with fallback poster and scroll scrubbing",
+          "Stage 1 HTML Overlays: Title, Info, CTA",
+          "Stage 4 Right-side Content: Title, Subtitle, 3 Info text elements"
+        ]
+      },
+      {
+        "id": "kids-experiences",
+        "name": "Experiências para as Crianças",
+        "type": "asymmetric_grid",
+        "content": "Recreação, monitoria, Espaço Baby 0-3 anos, estrutura infantil."
+      },
+      {
+        "id": "adult-experiences",
+        "name": "Momentos para os Adultos",
+        "type": "text_with_image_gallery",
+        "content": "Jogos, desafios, dança, convivência, bate-papo, relaxamento."
+      },
+      {
+        "id": "venue",
+        "name": "O Espaço",
+        "type": "parallax_section",
+        "content": "Quintal da Alegria, área externa, ambiente climatizado, comodidades."
+      },
+      {
+        "id": "tickets",
+        "name": "Ingressos",
+        "type": "pricing_cards",
+        "content": "Adultos R$110; Ingresso social R$105 + 1kg alimento não perecível; Crianças 0-5 anos R$30; Crianças 6+ R$45."
+      },
+      {
+        "id": "invite",
+        "name": "Final Invite",
+        "type": "centered_heavy_typography",
+        "content": "Vem viver o primeiro Vila com a gente. (With CTA button)"
+      }
+    ]
+  },
+  "media": {
+    "video": {
+      "placeholder_url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+      "poster_url": "https://images.unsplash.com/photo-1742094212061-c7b14a9f0587?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHw0fHxmYW1pbHklMjBwbGF5Z3JvdW5kJTIwZ29sZGVuJTIwaG91cnxlbnwwfHx8fDE3OTIzNDc1NTh8MA&ixlib=rb-4.1.0&q=85",
+      "instructions": "Ensure video tag has `playsInline`, `muted`, `preload='auto'`. Implement GSAP scrub to control `videoRef.current.currentTime`. Provide automatic fallback to the poster on devices where scrub/video fails."
+    },
+    "image_urls": {
+      "kids_experiences": [
+        "https://images.pexels.com/photos/2253883/pexels-photo-2253883.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "https://images.pexels.com/photos/5278823/pexels-photo-5278823.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      ],
+      "adult_experiences": [
+        "https://images.pexels.com/photos/30478431/pexels-photo-30478431.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "https://images.unsplash.com/photo-1755003842792-9d2b7ad08862?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzZ8MHwxfHNlYXJjaHwyfHxwYXJlbnRzJTIwcmVsYXhpbmclMjBwYXJrfGVufDB8fHx8MTc5MjM0NzU1OHww&ixlib=rb-4.1.0&q=85"
+      ],
+      "venue": [
+        "https://images.pexels.com/photos/17240976/pexels-photo-17240976.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "https://images.pexels.com/photos/15937644/pexels-photo-15937644.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      ]
+    }
+  },
+  "accessibility": {
+    "instructions": "Ensure WCAG AA contrast for text. Add descriptive ARIA labels for video controls and buttons. Respect `prefers-reduced-motion`.",
+    "data_testid": "Apply `data-testid` to all interactive elements, CTAs, navigation links, and pricing buttons."
+  },
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": "Do not make generic centered layouts. Prioritize optical alignment and tension. Write React files using .js or .jsx extension, NOT .tsx. Implement deep layering and dynamic scrolling effects. Never use placeholder texts, always use provided image/video URLs. Ensure 'data-testid' is added to interactive elements."
+}

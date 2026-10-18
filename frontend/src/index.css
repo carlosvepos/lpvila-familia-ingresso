@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cream: #F9F6F0;
+  --ink: #33261D;
+  --cocoa: #5C4033;
+  --forest: #1E4231;
+  --terra: #C35A42;
+  --sun: #E5A836;
+}
+
+@layer base {
+  :root {
+    --background: 33 33% 96%;
+    --foreground: 22 27% 16%;
+    --card: 0 0% 100%;
+    --card-foreground: 22 27% 16%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 22 27% 16%;
+    --primary: 158 38% 19%;
+    --primary-foreground: 36 45% 96%;
+    --secondary: 36 45% 96%;
+    --secondary-foreground: 22 27% 16%;
+    --muted: 36 25% 92%;
+    --muted-foreground: 28 22% 38%;
+    --accent: 14 51% 51%;
+    --accent-foreground: 36 45% 96%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 30 20% 86%;
+    --input: 30 20% 86%;
+    --ring: 14 51% 51%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-cream text-ink font-sans antialiased;
+  }
+}
+
+::selection {
+  background: var(--sun);
+  color: var(--forest);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--cream);
+}
+::-webkit-scrollbar-thumb {
+  background: #cbbfa8;
+  border-radius: 8px;
+  border: 2px solid var(--cream);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--terra);
+}
+
+/* Film grain overlay */
+.grain {
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  z-index: 90;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain-shift 9s steps(10) infinite;
+}
+@keyframes grain-shift {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-2%, -2%); }
+  80% { transform: translate(3%, 3%); }
+}
+
+/* Editorial marquee */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 48s linear infinite;
+}
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* Scroll hint line */
+.scroll-line {
+  animation: scroll-pulse 1.9s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+@keyframes scroll-pulse {
+  0% { transform: scaleY(0); transform-origin: top; }
+  45% { transform: scaleY(1); transform-origin: top; }
+  55% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* Rotating badge */
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .scroll-line,
+  .animate-spin-slow,
+  .grain {
+    animation: none !important;
+  }
+}
