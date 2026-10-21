@@ -95,7 +95,9 @@ export const CinematicHero = () => {
     };
     video.addEventListener("loadedmetadata", onMeta);
 
-    // Timeline de texto — mesma janela de scroll do vídeo (posições = % do scrub)
+    // Timeline de texto (posições = % do scrub; vídeo novo 9,33s):
+    // Estágio 01 visível 0–3s (0,00–0,30) · card entra quando a menina sai do quadro (~5s = 0,50)
+    // card sai quando ela volta com a plaquinha (~7s = 0,70)
     const tl = gsap.timeline({
       defaults: { ease: "none" },
       scrollTrigger: {
@@ -110,15 +112,16 @@ export const CinematicHero = () => {
     });
     state.target = tl.scrollTrigger.progress;
     state.current = state.target;
-    tl.to(hintRef.current, { autoAlpha: 0, y: 14, duration: 0.06 }, 0);
-    tl.to(stage1Ref.current, { autoAlpha: 0, y: -80, duration: 0.2, ease: "power1.in" }, 0.2);
-    tl.fromTo(stage4Ref.current, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.1 }, 0.74);
+    tl.to(hintRef.current, { autoAlpha: 0, y: 14, duration: 0.05 }, 0);
+    tl.to(stage1Ref.current, { autoAlpha: 0, y: -80, duration: 0.12, ease: "power1.in" }, 0.3);
+    tl.fromTo(stage4Ref.current, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.07 }, 0.5);
     tl.fromTo(
       ".stage4-item",
       { autoAlpha: 0, y: 44 },
-      { autoAlpha: 1, y: 0, duration: 0.06, stagger: 0.025 },
-      0.76
+      { autoAlpha: 1, y: 0, duration: 0.05, stagger: 0.02 },
+      0.52
     );
+    tl.to(stage4Ref.current, { autoAlpha: 0, y: -40, duration: 0.08, ease: "power1.in" }, 0.7);
     tl.to({}, { duration: 0.02 }, 0.98);
 
     // Sync do frame com easing — evita sobrecarregar a decodificação
