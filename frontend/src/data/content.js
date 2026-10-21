@@ -17,7 +17,7 @@ export const EVENT = {
 
 export const HERO = {
   titleLine1: "Os pequenos brincam.",
-  titleLine2: "Os grandes também.",
+  titleLine2: "Os Adultos também.",
   subtitle:
     "Uma tarde para crianças e adultos viverem juntos uma experiência gostosa em família.",
   cta: "Quero participar",
@@ -190,7 +190,7 @@ export const INVITE = {
 
 export const MARQUEE_ITEMS = [
   "Os pequenos brincam",
-  "Os grandes também",
+  "Os Adultos também",
   "1º Encontro Vila Família",
   "31 de outubro de 2026",
   "Quintal da Alegria",
