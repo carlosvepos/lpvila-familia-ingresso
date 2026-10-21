@@ -19,17 +19,18 @@ gsap.registerPlugin(ScrollTrigger);
 const SRC_1080 = "/videos/vila-familia-1080.mp4";
 const SRC_720 = "/videos/vila-familia-720.mp4";
 const SRC_WEBM = "/videos/vila-familia-720.webm";
-const SRC_VERT_MP4 = "/videos/vila-familia-vertical.mp4";
-const SRC_VERT_WEBM = "/videos/vila-familia-vertical.webm";
 const EASE = [0.16, 1, 0.3, 1];
+const FRAME_COUNT = 103;
+const FRAME_URL = (i) => `/frames/vertical/v${String(i + 1).padStart(3, "0")}.jpg`;
 
-// Retrato (celular) → versão vertical; paisagem/desktop → 1080p (720p em dispositivo fraco)
-// Cadeia de fontes: mp4 → webm (navegadores sem H.264)
+// Retrato (celular) → sequência de frames em canvas: navegadores mobile não
+// repintam <video> em seeks programáticos sem play. Desktop → vídeo 1080p
+// (720p em dispositivo fraco), cadeia mp4 → webm.
 const pickBundle = () => {
-  const desktop = { sources: [SRC_1080, SRC_WEBM], poster: "/img/poster-first.jpg" };
+  const desktop = { kind: "video", sources: [SRC_1080, SRC_WEBM], poster: "/img/poster-first.jpg" };
   if (typeof window === "undefined") return desktop;
   if (window.innerHeight > window.innerWidth) {
-    return { sources: [SRC_VERT_MP4, SRC_VERT_WEBM], poster: "/img/poster-vertical.jpg" };
+    return { kind: "canvas", poster: "/img/poster-vertical.jpg" };
   }
   const conn = navigator.connection || {};
   const weak = (navigator.deviceMemory && navigator.deviceMemory <= 2) || conn.saveData;
@@ -76,6 +77,7 @@ const RotatingBadge = () => (
 export const CinematicHero = () => {
   const wrapRef = useRef(null);
   const videoRef = useRef(null);
+  const canvasRef = useRef(null);
   const stage1Ref = useRef(null);
   const stage4Ref = useRef(null);
   const hintRef = useRef(null);
@@ -83,22 +85,50 @@ export const CinematicHero = () => {
   const [srcIdx, setSrcIdx] = useState(0);
   const [failed, setFailed] = useState(false);
   const reduced = useReducedMotion();
+  const canvasMode = bundle.kind === "canvas";
   const staticMode = reduced || failed;
 
   useEffect(() => {
     if (staticMode) return;
-    const video = videoRef.current;
     const wrap = wrapRef.current;
-    if (!video || !wrap) return;
+    if (!wrap) return;
+    const video = canvasMode ? null : videoRef.current;
+    const canvas = canvasMode ? canvasRef.current : null;
+    if (!canvasMode && !video) return;
 
     const state = { target: 0, current: 0, dur: 0 };
     let raf = 0;
+    let alive = true;
 
     const onMeta = () => {
-      state.dur = video.duration || 0;
+      if (video) state.dur = video.duration || 0;
       ScrollTrigger.refresh();
     };
-    video.addEventListener("loadedmetadata", onMeta);
+    if (video) video.addEventListener("loadedmetadata", onMeta);
+
+    // Loader progressivo de frames (canvas/mobile) — 5 cadeias intercaladas:
+    // cobre o filme inteiro cedo (1 a cada 5 frames) e adensa com o tempo
+    const frames = new Array(FRAME_COUNT).fill(null);
+    const nextFree = [0, 1, 2, 3, 4];
+    const stepChain = (k) => {
+      if (!alive) return;
+      const n = nextFree[k];
+      if (n >= FRAME_COUNT) return;
+      const im = new Image();
+      im.src = FRAME_URL(n);
+      im.onload = () => {
+        if (!alive) return;
+        frames[n] = im;
+        nextFree[k] += 5;
+        stepChain(k);
+      };
+      im.onerror = () => {
+        if (!alive) return;
+        nextFree[k] += 5;
+        stepChain(k);
+      };
+    };
+    if (canvasMode) for (let k = 0; k < 5; k++) stepChain(k);
 
     // Timeline de texto (posições = % do scrub; vídeo novo 9,33s):
     // Estágio 01 visível 0–3s (0,00–0,30) · card entra quando a menina sai do quadro (~5s = 0,50)
@@ -129,12 +159,31 @@ export const CinematicHero = () => {
     tl.to(stage4Ref.current, { autoAlpha: 0, y: -40, duration: 0.08, ease: "power1.in" }, 0.7);
     tl.to({}, { duration: 0.02 }, 0.98);
 
-    // Sync do frame com easing — evita sobrecarregar a decodificação
+    // Sync do frame com easing — vídeo no desktop, canvas no mobile
+    let lastDrawn = -1;
     const tick = () => {
       const diff = state.target - state.current;
       state.current =
         Math.abs(diff) > 0.0004 ? state.current + diff * 0.13 : state.target;
-      if (state.dur > 0) {
+      if (canvasMode && canvas) {
+        const idx = Math.min(
+          FRAME_COUNT - 1,
+          Math.max(0, Math.round(state.current * (FRAME_COUNT - 1)))
+        );
+        if (idx !== lastDrawn || !frames[idx]) {
+          let im = frames[idx];
+          if (!im) {
+            for (let d = 1; d < FRAME_COUNT; d++) {
+              im = frames[idx - d] || frames[idx + d];
+              if (im) break;
+            }
+          }
+          if (im) {
+            canvas.getContext("2d").drawImage(im, 0, 0, canvas.width, canvas.height);
+            lastDrawn = idx;
+          }
+        }
+      } else if (video && state.dur > 0) {
         const t = Math.min(0.999, Math.max(0, state.current)) * state.dur;
         if (Math.abs(video.currentTime - t) > 0.008) video.currentTime = t;
       }
@@ -143,12 +192,13 @@ export const CinematicHero = () => {
     raf = requestAnimationFrame(tick);
 
     return () => {
+      alive = false;
       cancelAnimationFrame(raf);
-      video.removeEventListener("loadedmetadata", onMeta);
+      if (video) video.removeEventListener("loadedmetadata", onMeta);
       if (tl.scrollTrigger) tl.scrollTrigger.kill();
       tl.kill();
     };
-  }, [staticMode, srcIdx]);
+  }, [staticMode, srcIdx, canvasMode]);
 
   return (
     <section
@@ -162,7 +212,23 @@ export const CinematicHero = () => {
         className="sticky top-0 h-screen w-full overflow-hidden bg-[#10170F]"
         style={{ height: "100svh" }}
       >
-        {!failed ? (
+        {/* Poster instantâneo sempre atrás (primeira pintura + fallback) */}
+        <img
+          src={bundle.poster}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        {canvasMode ? (
+          <canvas
+            ref={canvasRef}
+            width={720}
+            height={1280}
+            className="absolute inset-0 h-full w-full object-cover"
+            aria-hidden="true"
+            data-testid="hero-canvas"
+          />
+        ) : !failed ? (
           <video
             ref={videoRef}
             key={bundle.sources[srcIdx]}
@@ -181,14 +247,7 @@ export const CinematicHero = () => {
             tabIndex={-1}
             data-testid="hero-video"
           />
-        ) : (
-          <img
-            src={bundle.poster}
-            alt="Menina brincando no escorregador de espuma do Quintal da Alegria"
-            className="absolute inset-0 h-full w-full object-cover"
-            data-testid="hero-fallback"
-          />
-        )}
+        ) : null}
 
         {/* Vinhetas de leitura */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-2/5 bg-gradient-to-t from-black/60 to-transparent max-sm:h-2/3 max-sm:from-black/70" />
