@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   ArrowDown,
   CalendarDays,
@@ -84,9 +84,10 @@ export const CinematicHero = () => {
   const [bundle] = useState(pickBundle);
   const [srcIdx, setSrcIdx] = useState(0);
   const [failed, setFailed] = useState(false);
-  const reduced = useReducedMotion();
+  // O scrub é controlado pelo usuário (não é animação automática), então roda
+  // mesmo com "Reduzir Movimento" do iOS/Android ativado — só vira estático se a mídia falhar
   const canvasMode = bundle.kind === "canvas";
-  const staticMode = reduced || failed;
+  const staticMode = failed;
 
   useEffect(() => {
     if (staticMode) return;
