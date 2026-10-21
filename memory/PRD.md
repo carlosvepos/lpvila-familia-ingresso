@@ -19,7 +19,7 @@ Landing page para o **1º Encontro Vila Família** (31/10/2026, 14h–18h, Quint
 - Seções: Marquee editorial lento, Crianças (bento com foto + 4 cards), Adultos (lista editorial numerada 01–06 + foto, fundo verde), O Espaço (parallax + card de comodidades sobreposto), Ingressos (4 cards com preços exatos do brief + CTA), Convite final + footer. Grain overlay, cursor customizado (desktop), badges rotativos.
 
 ## Estado atual (21/10/2026)
-- Implementado e verificado no preview: scrub bidirecional com o vídeo novo (0s no topo com textos, quadro vazio + card aos ~5,2s, menina com plaquinha aos ~8,3s sem card), sem overflow no mobile 390px, CTA da hero rola até #ingressos, preços exatos, marquee, parallax, grain.
+- Implementado e verificado no preview: scrub bidirecional com o vídeo novo (0s no topo com textos, quadro vazio + card aos ~5,2s, menina com plaquinha aos ~8,3s sem card), **mesmo efeito de scroll no celular com o vídeo vertical**, sem overflow no mobile 390px, CTA da hero rola até #ingressos, preços exatos, marquee, parallax, grain. Rodapé com contatos: Instagram @vilafamilia.vv e WhatsApp (27) 98859-5100 (wa.me/5527988595100).
 - Preview Chromium não tem H.264 → a experiência roda via WebM VP9 lá; em Chrome/Safari reais o MP4 toca (cadeia testada até o WebM no preview).
 - MOCKED/não configurável ainda: URL de compra (`TICKETS_URL = ""`), imagens das seções vêm de Pexels/Unsplash (referência) — substituir por fotos reais do Quintal da Alegria quando existirem.
 

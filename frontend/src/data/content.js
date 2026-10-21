@@ -159,3 +159,10 @@ export const MARQUEE_ITEMS = [
   "31 de outubro de 2026",
   "Quintal da Alegria",
 ];
+
+export const CONTACTS = {
+  instagram: "https://www.instagram.com/vilafamilia.vv/",
+  instagramLabel: "@vilafamilia.vv",
+  whatsapp: "https://wa.me/5527988595100",
+  whatsappLabel: "(27) 98859-5100",
+};
