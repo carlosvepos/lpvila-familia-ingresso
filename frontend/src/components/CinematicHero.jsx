@@ -20,15 +20,21 @@ gsap.registerPlugin(ScrollTrigger);
 const SRC_1080 = "/videos/vila-familia-1080.mp4";
 const SRC_720 = "/videos/vila-familia-720.mp4";
 const SRC_WEBM = "/videos/vila-familia-720.webm";
+const SRC_VERT_MP4 = "/videos/vila-familia-vertical.mp4";
+const SRC_VERT_WEBM = "/videos/vila-familia-vertical.webm";
 const EASE = [0.16, 1, 0.3, 1];
 
-// Cadeia de fontes: mp4 → webm (navegadores sem H.264) — mobile fraco começa no 720p
-const pickSources = () => {
-  if (typeof navigator === "undefined") return [SRC_1080, SRC_WEBM];
+// Retrato (celular) → versão vertical; paisagem/desktop → 1080p (720p em dispositivo fraco)
+// Cadeia de fontes: mp4 → webm (navegadores sem H.264)
+const pickBundle = () => {
+  const desktop = { sources: [SRC_1080, SRC_WEBM], poster: "/img/poster-first.jpg" };
+  if (typeof window === "undefined") return desktop;
+  if (window.innerHeight > window.innerWidth) {
+    return { sources: [SRC_VERT_MP4, SRC_VERT_WEBM], poster: "/img/poster-vertical.jpg" };
+  }
   const conn = navigator.connection || {};
   const weak = (navigator.deviceMemory && navigator.deviceMemory <= 2) || conn.saveData;
-  const mobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
-  return mobile || weak ? [SRC_720, SRC_WEBM] : [SRC_1080, SRC_WEBM];
+  return weak ? { ...desktop, sources: [SRC_720, SRC_WEBM] } : desktop;
 };
 
 const STAGE4_ICONS = { blocks: Blocks, coffee: Coffee, heart: Heart };
@@ -74,7 +80,7 @@ export const CinematicHero = () => {
   const stage1Ref = useRef(null);
   const stage4Ref = useRef(null);
   const hintRef = useRef(null);
-  const [sources] = useState(pickSources);
+  const [bundle] = useState(pickBundle);
   const [srcIdx, setSrcIdx] = useState(0);
   const [failed, setFailed] = useState(false);
   const reduced = useReducedMotion();
@@ -160,16 +166,16 @@ export const CinematicHero = () => {
         {!failed ? (
           <video
             ref={videoRef}
-            key={sources[srcIdx]}
+            key={bundle.sources[srcIdx]}
             className="absolute inset-0 h-full w-full object-cover"
-            src={sources[srcIdx]}
-            poster="/img/poster-first.jpg"
+            src={bundle.sources[srcIdx]}
+            poster={bundle.poster}
             muted
             playsInline
             preload="auto"
             disablePictureInPicture
             onError={() => {
-              if (srcIdx < sources.length - 1) setSrcIdx(srcIdx + 1);
+              if (srcIdx < bundle.sources.length - 1) setSrcIdx(srcIdx + 1);
               else setFailed(true);
             }}
             aria-hidden="true"
@@ -178,8 +184,8 @@ export const CinematicHero = () => {
           />
         ) : (
           <img
-            src="/img/poster-first.jpg"
-            alt="Família abraçada no playground do Quintal da Alegria"
+            src={bundle.poster}
+            alt="Menina brincando no escorregador de espuma do Quintal da Alegria"
             className="absolute inset-0 h-full w-full object-cover"
             data-testid="hero-fallback"
           />

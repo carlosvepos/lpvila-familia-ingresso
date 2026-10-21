@@ -12,7 +12,7 @@ Landing page para o **1º Encontro Vila Família** (31/10/2026, 14h–18h, Quint
 - React (CRA) + Tailwind + GSAP ScrollTrigger + framer-motion + lenis (lint via hot reload, sem build no pod).
 - `CinematicHero.jsx`: wrapper 400vh + bloco `sticky` 100svh. ScrollTrigger (scrub) grava progresso-alvo; loop rAF com lerp (0.13) aplica `currentTime` só quando a diferença > 0.008s (evita sobrecarga de decode). Timeline GSAP separada (0–1) controla: dica de scroll (0–6%), saída do Estágio 01 (20–40%), entrada do Estágio 04 (74–90%).
 - Cadeia de fontes do player: MP4 1080p → WebM VP9 720p (navegadores sem H.264) → fallback de imagem com poster. `prefers-reduced-motion` = hero estático com poster.
-- Vídeo: **"Video Project 4"** (21/10/2026) — menina no escorregador de espuma; uso integral 9,33s (sem queimados; a plaquinha "Vem pro VILA Família!" é prop físico no vídeo). Keyframes a cada 3 frames (30fps). 1080p 19MB / 720p 9MB / WebM 8,2MB.
+- Vídeo: **"Video Project 4"** (21/10/2026) — menina no escorregador de espuma; uso integral 9,33s (sem queimados; a plaquinha "Vem pro VILA Família!" é prop físico no vídeo). Keyframes a cada 3 frames (30fps). 1080p 19MB / 720p 9MB / WebM 8,2MB. **Versão vertical 1080x1920 (8,6s)** enviada em 21/10/2026 ("vem pro vila familia cel.mp4") — usada automaticamente quando a tela está em retrato (`window.innerHeight > innerWidth`), com WebM vertical de fallback (7,8MB) e poster próprio.
 - Coreografia de texto (atualizada 21/10/2026 a pedido): **Estágio 01** (título + subtítulo + info + CTA) visível nos primeiros 3s (fade em 0,30–0,42); **card "1º Encontro / Brincadeiras que criam conexões"** entra quando a menina sai do quadro (~5s = 0,50) e sai quando ela volta com a plaquinha (~7s = 0,70); 0,77–1,0 só o vídeo com a plaquinha até o pin soltar no letreiro.
 - Lenis integrado ao ticker do GSAP; `ScrollTrigger.update` no evento de scroll; limpeza completa em unmount.
 - Logo original SVG (casinha verde + coração amarelo) usado na navbar, hero, footer e favicon.
@@ -26,6 +26,5 @@ Landing page para o **1º Encontro Vila Família** (31/10/2026, 14h–18h, Quint
 ## Backlog priorizado
 - P0: Configurar `TICKETS_URL` quando o link de compra for fornecido (`/app/frontend/src/data/content.js`).
 - P1: Trocar fotos de referência (Pexels/Unsplash) por fotos reais do evento/espaço.
-- P1: Versão 21:9 real / recorte vertical do vídeo para telas em retrato (atualmente object-cover central).
 - P2: Formulário de interesse (backend) caso o cliente queira capturar leads sem gateway de pagamento.
 - P2: OG image dedicada + analytics simples.
