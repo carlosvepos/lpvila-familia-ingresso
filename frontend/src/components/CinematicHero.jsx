@@ -131,9 +131,9 @@ export const CinematicHero = () => {
     };
     if (canvasMode) for (let k = 0; k < 5; k++) stepChain(k);
 
-    // Timeline de texto (posições = % do scrub; vídeo novo 9,33s):
-    // Estágio 01 visível 0–3s (0,00–0,30) · card entra quando a menina sai do quadro (~5s = 0,50)
-    // card sai quando ela volta com a plaquinha (~7s = 0,70)
+    // Timeline de texto (posições = % do scrub) — mesmo vídeo da menina nos dois
+    // formatos (9,33s PC paisagem / 8,6s celular vertical, mesmos marcos narrativos):
+    // Estágio 01 sai 0,30–0,42 · card entra quando ela sai do quadro (0,50) e sai quando volta com a plaquinha (0,70)
     const tl = gsap.timeline({
       defaults: { ease: "none" },
       scrollTrigger: {
@@ -148,16 +148,19 @@ export const CinematicHero = () => {
     });
     state.target = tl.scrollTrigger.progress;
     state.current = state.target;
+    const B = { s1: 0.3, s1Dur: 0.12, card: 0.5, cardDur: 0.07, items: 0.52, out: 0.7, outDur: 0.08 };
     tl.to(hintRef.current, { autoAlpha: 0, y: 14, duration: 0.05 }, 0);
-    tl.to(stage1Ref.current, { autoAlpha: 0, y: -80, duration: 0.12, ease: "power1.in" }, 0.3);
-    tl.fromTo(stage4Ref.current, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.07 }, 0.5);
+    tl.to(stage1Ref.current, { autoAlpha: 0, y: -80, duration: B.s1Dur, ease: "power1.in" }, B.s1);
+    tl.fromTo(stage4Ref.current, { autoAlpha: 0 }, { autoAlpha: 1, duration: B.cardDur }, B.card);
     tl.fromTo(
       ".stage4-item",
       { autoAlpha: 0, y: 44 },
       { autoAlpha: 1, y: 0, duration: 0.05, stagger: 0.02 },
-      0.52
+      B.items
     );
-    tl.to(stage4Ref.current, { autoAlpha: 0, y: -40, duration: 0.08, ease: "power1.in" }, 0.7);
+    if (B.out !== null) {
+      tl.to(stage4Ref.current, { autoAlpha: 0, y: -40, duration: B.outDur, ease: "power1.in" }, B.out);
+    }
     tl.to({}, { duration: 0.02 }, 0.98);
 
     // Sync do frame com easing — vídeo no desktop, canvas no mobile
