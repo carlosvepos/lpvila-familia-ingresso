@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import { HERO, EVENT, STAGE_FOUR } from "../data/content";
 import { scrollToId } from "../lib/scroll";
-import { LogoMark } from "./Logo";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -200,11 +199,13 @@ export const CinematicHero = () => {
         <div ref={stage1Ref} className="absolute inset-0 z-20 flex items-center">
           <div className="mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-16">
             <div className="max-w-2xl">
-              <motion.div {...fadeUp(0.15)} className="flex items-center gap-3">
-                <LogoMark className="h-10 w-10 drop-shadow-lg lg:h-12 lg:w-12" />
-                <span className="font-display text-2xl font-black tracking-tight text-cream drop-shadow-lg lg:text-3xl">
-                  Vila<span className="text-sun">Família</span>
-                </span>
+              <motion.div {...fadeUp(0.15)}>
+                <img
+                  src="/img/logo-white.png"
+                  alt="Vila Família"
+                  className="h-12 w-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)] sm:h-14"
+                  data-testid="hero-logo"
+                />
               </motion.div>
 
               <motion.p

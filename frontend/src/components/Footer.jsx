@@ -1,12 +1,16 @@
 import { Instagram, MessageCircle } from "lucide-react";
-import { Logo } from "./Logo";
 import { CONTACTS } from "../data/content";
 
 export const Footer = () => (
   <footer className="bg-forestdark py-12 text-cream/60" data-testid="footer">
     <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
       <div className="flex flex-col items-center justify-between gap-8 md:flex-row md:items-start">
-        <Logo dark />
+        <img
+          src="/img/logo-white.png"
+          alt="Vila Família"
+          className="h-11 w-auto"
+          data-testid="footer-logo"
+        />
         <div className="flex flex-col items-center gap-3 md:items-start">
           <a
             href={CONTACTS.instagram}
