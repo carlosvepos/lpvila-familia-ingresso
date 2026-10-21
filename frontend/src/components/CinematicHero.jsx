@@ -192,9 +192,9 @@ export const CinematicHero = () => {
         )}
 
         {/* Vinhetas de leitura */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-2/5 bg-gradient-to-t from-black/60 to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-3/5 bg-gradient-to-r from-black/50 to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-1/4 bg-gradient-to-b from-black/40 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-2/5 bg-gradient-to-t from-black/60 to-transparent max-sm:h-2/3 max-sm:from-black/70" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-3/5 bg-gradient-to-r from-black/50 to-transparent max-sm:w-full max-sm:from-black/35" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-1/4 bg-gradient-to-b from-black/40 to-transparent max-sm:h-1/3 max-sm:from-black/55" />
 
         {/* ESTÁGIO 01 — Hero */}
         <div ref={stage1Ref} className="absolute inset-0 z-20 flex items-center">
