@@ -134,7 +134,7 @@ export const TICKETS = {
     {
       id: "lote3",
       name: "3º lote",
-      tag: "no dia",
+      tag: "No dia do evento",
       highlight: false,
       prices: [
         { label: "Adulto", price: "R$ 150" },

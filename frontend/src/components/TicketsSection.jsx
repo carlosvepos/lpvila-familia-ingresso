@@ -5,15 +5,12 @@ import { Reveal, MaskedLine } from "./Reveal";
 const RULE_ICONS = { baby: Baby, ticket: Ticket, users: Users, clock: Clock3, info: Info };
 
 export const CtaButton = ({ testid, className = "" }) => {
-  const href = TICKETS_URL;
+  const href = TICKETS_URL || "/checkout";
   return (
     <a
       href={href || "#"}
-      target={href ? "_blank" : undefined}
-      rel={href ? "noreferrer" : undefined}
-      onClick={(e) => {
-        if (!href) e.preventDefault();
-      }}
+      target={TICKETS_URL ? "_blank" : undefined}
+      rel={TICKETS_URL ? "noreferrer" : undefined}
       data-testid={testid}
       className={`group inline-flex items-center gap-3 rounded-full bg-terra px-9 py-4 font-display text-base font-extrabold uppercase tracking-wide text-cream shadow-[0_18px_44px_-12px_rgba(195,90,66,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-forest ${className}`}
     >
@@ -62,30 +59,36 @@ export const TicketsSection = () => (
               <div className="flex items-center justify-between gap-3">
                 <h4 className="font-display text-xl font-extrabold">{lote.name}</h4>
                 <span
-                  className={`whitespace-nowrap rounded-full px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.12em] ${
+                  className={`whitespace-nowrap rounded-full px-3 py-1 text-[11px] font-extrabold tracking-[0.12em] ${
                     lote.highlight ? "bg-sun text-forest" : "bg-terra/10 text-terra"
-                  }`}
+                  } ${lote.id !== "lote3" ? "uppercase" : ""}`}
                 >
                   {lote.tag}
                 </span>
               </div>
-              <ul className="mt-6 flex-1">
-                {lote.prices.map((p) => (
-                  <li
-                    key={p.label}
-                    className={`flex items-baseline justify-between gap-3 border-t py-3.5 ${
-                      lote.highlight ? "border-cream/15" : "border-ink/[0.07]"
-                    }`}
-                  >
-                    <span className={`text-sm ${lote.highlight ? "text-cream/75" : "text-cocoa"}`}>
-                      {p.label}
-                    </span>
-                    <span className="font-display text-2xl font-black tracking-tight">
-                      {p.price}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+              {lote.id === "lote2" ? (
+                <p className="mt-6 flex-1 border-t border-ink/[0.07] pt-4 text-sm leading-relaxed text-cocoa">
+                  Consulte o atendimento para verificar os valores e a disponibilidade deste lote.
+                </p>
+              ) : (
+                <ul className="mt-6 flex-1">
+                  {lote.prices.map((p) => (
+                    <li
+                      key={p.label}
+                      className={`flex items-baseline justify-between gap-3 border-t py-3.5 ${
+                        lote.highlight ? "border-cream/15" : "border-ink/[0.07]"
+                      }`}
+                    >
+                      <span className={`text-sm ${lote.highlight ? "text-cream/75" : "text-cocoa"}`}>
+                        {p.label}
+                      </span>
+                      <span className="font-display text-2xl font-black tracking-tight">
+                        {p.price}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </Reveal>
         ))}
@@ -112,12 +115,6 @@ export const TicketsSection = () => (
                     1º lote
                   </span>
                   <span className="font-display text-lg font-black">{combo.lote1}</span>
-                </span>
-                <span className="inline-flex items-baseline gap-2 rounded-full border border-ink/15 px-4 py-2 text-ink">
-                  <span className="text-[10px] font-extrabold uppercase tracking-[0.12em] text-cocoa/70">
-                    2º lote
-                  </span>
-                  <span className="font-display text-lg font-black">{combo.lote2}</span>
                 </span>
               </div>
             </div>
@@ -149,7 +146,9 @@ export const TicketsSection = () => (
       <Reveal delay={0.15}>
         <div className="mt-14 flex flex-col items-center gap-3 text-center">
           <CtaButton testid="tickets-cta" />
-          <p className="text-xs text-cocoa/70">{TICKETS.note}</p>
+          <p className="text-xs text-cocoa/70">
+            {TICKETS_URL ? TICKETS.note : "Confira as opções e continue sua inscrição pelo atendimento oficial."}
+          </p>
         </div>
       </Reveal>
     </div>

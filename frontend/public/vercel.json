@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/checkout/:path*",
+      "destination": "/index.html"
+    },
+    {
       "source": "/politica-de-cancelamento/:path*",
       "destination": "/index.html"
     }
