@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   ArrowDown,
   CalendarDays,
@@ -13,22 +13,24 @@ import {
 } from "lucide-react";
 import { HERO, EVENT, STAGE_FOUR } from "../data/content";
 import { scrollToId } from "../lib/scroll";
-import { LogoMark } from "./Logo";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const SRC_1080 = "/videos/vila-familia-1080.mp4";
-const SRC_720 = "/videos/vila-familia-720.mp4";
-const SRC_WEBM = "/videos/vila-familia-720.webm";
 const EASE = [0.16, 1, 0.3, 1];
+const DESKTOP_FRAME_COUNT = 120;
+const MOBILE_FRAME_COUNT = 103;
+const FRAME_URL = (frameSet, index) =>
+  frameSet === "desktop"
+    ? `/frames/hero-desktop/h${String(index + 1).padStart(3, "0")}.jpg`
+    : `/frames/vertical/v${String(index + 1).padStart(3, "0")}.jpg`;
 
-// Cadeia de fontes: mp4 → webm (navegadores sem H.264) — mobile fraco começa no 720p
-const pickSources = () => {
-  if (typeof navigator === "undefined") return [SRC_1080, SRC_WEBM];
-  const conn = navigator.connection || {};
-  const weak = (navigator.deviceMemory && navigator.deviceMemory <= 2) || conn.saveData;
-  const mobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
-  return mobile || weak ? [SRC_720, SRC_WEBM] : [SRC_1080, SRC_WEBM];
+// A Hero usa frames em canvas nos dois formatos para que a rolagem controle
+// diretamente a imagem, sem seeks contínuos e custosos no vídeo do desktop.
+const pickBundle = () => {
+  if (typeof window !== "undefined" && window.innerHeight > window.innerWidth) {
+    return { kind: "canvas", frameSet: "mobile", poster: "/img/poster-vertical.jpg" };
+  }
+  return { kind: "canvas", frameSet: "desktop", poster: "/img/poster-first.jpg" };
 };
 
 const STAGE4_ICONS = { blocks: Blocks, coffee: Coffee, heart: Heart };
@@ -71,31 +73,76 @@ const RotatingBadge = () => (
 export const CinematicHero = () => {
   const wrapRef = useRef(null);
   const videoRef = useRef(null);
+  const canvasRef = useRef(null);
   const stage1Ref = useRef(null);
   const stage4Ref = useRef(null);
   const hintRef = useRef(null);
-  const [sources] = useState(pickSources);
+  const [bundle] = useState(pickBundle);
   const [srcIdx, setSrcIdx] = useState(0);
   const [failed, setFailed] = useState(false);
-  const reduced = useReducedMotion();
-  const staticMode = reduced || failed;
+  // O scrub é controlado pelo usuário (não é animação automática), então roda
+  // mesmo com "Reduzir Movimento" do iOS/Android ativado — só vira estático se a mídia falhar
+  const canvasMode = bundle.kind === "canvas";
+  const staticMode = failed;
 
   useEffect(() => {
     if (staticMode) return;
-    const video = videoRef.current;
     const wrap = wrapRef.current;
-    if (!video || !wrap) return;
+    if (!wrap) return;
+    const video = canvasMode ? null : videoRef.current;
+    const canvas = canvasMode ? canvasRef.current : null;
+    if (!canvasMode && !video) return;
 
+    const frameCount = bundle.frameSet === "desktop" ? DESKTOP_FRAME_COUNT : MOBILE_FRAME_COUNT;
     const state = { target: 0, current: 0, dur: 0 };
     let raf = 0;
+    let alive = true;
 
     const onMeta = () => {
-      state.dur = video.duration || 0;
+      if (video) state.dur = video.duration || 0;
       ScrollTrigger.refresh();
     };
-    video.addEventListener("loadedmetadata", onMeta);
+    if (video) video.addEventListener("loadedmetadata", onMeta);
 
-    // Timeline de texto — mesma janela de scroll do vídeo (posições = % do scrub)
+    // Loader progressivo de frames — 5 cadeias intercaladas:
+    // cobre o filme inteiro cedo (1 a cada 5 frames) e adensa com o tempo
+    const frames = new Array(frameCount).fill(null);
+    const nextFree = [0, 1, 2, 3, 4];
+    const priorityLoads = new Set();
+    const requestPriorityFrame = (index) => {
+      if (!alive || frames[index] || priorityLoads.has(index)) return;
+      priorityLoads.add(index);
+      const image = new Image();
+      image.onload = () => {
+        if (alive) frames[index] = image;
+        priorityLoads.delete(index);
+      };
+      image.onerror = () => priorityLoads.delete(index);
+      image.src = FRAME_URL(bundle.frameSet, index);
+    };
+    const stepChain = (k) => {
+      if (!alive) return;
+      const n = nextFree[k];
+      if (n >= frameCount) return;
+      const im = new Image();
+      im.src = FRAME_URL(bundle.frameSet, n);
+      im.onload = () => {
+        if (!alive) return;
+        frames[n] = im;
+        nextFree[k] += 5;
+        stepChain(k);
+      };
+      im.onerror = () => {
+        if (!alive) return;
+        nextFree[k] += 5;
+        stepChain(k);
+      };
+    };
+    if (canvasMode) for (let k = 0; k < 5; k++) stepChain(k);
+
+    // Timeline de texto (posições = % do scrub) — mesmo vídeo da menina nos dois
+    // formatos (9,33s PC paisagem / 8,6s celular vertical, mesmos marcos narrativos):
+    // Estágio 01 sai 0,30–0,42 · card entra quando ela sai do quadro (0,50) e sai quando volta com a plaquinha (0,70)
     const tl = gsap.timeline({
       defaults: { ease: "none" },
       scrollTrigger: {
@@ -105,28 +152,61 @@ export const CinematicHero = () => {
         scrub: true,
         onUpdate: (self) => {
           state.target = self.progress;
+          if (canvasMode) {
+            requestPriorityFrame(Math.round(self.progress * (frameCount - 1)));
+          }
         },
       },
     });
     state.target = tl.scrollTrigger.progress;
     state.current = state.target;
-    tl.to(hintRef.current, { autoAlpha: 0, y: 14, duration: 0.06 }, 0);
-    tl.to(stage1Ref.current, { autoAlpha: 0, y: -80, duration: 0.2, ease: "power1.in" }, 0.2);
-    tl.fromTo(stage4Ref.current, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.1 }, 0.74);
+    const B = { s1: 0.3, s1Dur: 0.12, card: 0.5, cardDur: 0.07, items: 0.52, out: 0.7, outDur: 0.08 };
+    tl.to(hintRef.current, { autoAlpha: 0, y: 14, duration: 0.05 }, 0);
+    tl.to(stage1Ref.current, { autoAlpha: 0, y: -80, duration: B.s1Dur, ease: "power1.in" }, B.s1);
+    tl.fromTo(stage4Ref.current, { autoAlpha: 0 }, { autoAlpha: 1, duration: B.cardDur }, B.card);
     tl.fromTo(
       ".stage4-item",
       { autoAlpha: 0, y: 44 },
-      { autoAlpha: 1, y: 0, duration: 0.06, stagger: 0.025 },
-      0.76
+      { autoAlpha: 1, y: 0, duration: 0.05, stagger: 0.02 },
+      B.items
     );
+    if (B.out !== null) {
+      tl.to(stage4Ref.current, { autoAlpha: 0, y: -40, duration: B.outDur, ease: "power1.in" }, B.out);
+    }
     tl.to({}, { duration: 0.02 }, 0.98);
 
-    // Sync do frame com easing — evita sobrecarregar a decodificação
+    // Sync do frame com easing — canvas em desktop e mobile
+    let lastDrawn = -1;
     const tick = () => {
       const diff = state.target - state.current;
       state.current =
         Math.abs(diff) > 0.0004 ? state.current + diff * 0.13 : state.target;
-      if (state.dur > 0) {
+      if (canvasMode && canvas) {
+        const idx = Math.min(frameCount - 1, Math.max(0, Math.round(state.current * (frameCount - 1))));
+        if (!frames[idx]) requestPriorityFrame(idx);
+        let im = frames[idx];
+        let drawIndex = idx;
+        if (!im) {
+          for (let d = 1; d < frameCount; d += 1) {
+            const earlier = idx - d;
+            const later = idx + d;
+            if (earlier >= 0 && frames[earlier]) {
+              im = frames[earlier];
+              drawIndex = earlier;
+              break;
+            }
+            if (later < frameCount && frames[later]) {
+              im = frames[later];
+              drawIndex = later;
+              break;
+            }
+          }
+        }
+        if (im && drawIndex !== lastDrawn) {
+          canvas.getContext("2d").drawImage(im, 0, 0, canvas.width, canvas.height);
+          lastDrawn = drawIndex;
+        }
+      } else if (video && state.dur > 0) {
         const t = Math.min(0.999, Math.max(0, state.current)) * state.dur;
         if (Math.abs(video.currentTime - t) > 0.008) video.currentTime = t;
       }
@@ -135,12 +215,13 @@ export const CinematicHero = () => {
     raf = requestAnimationFrame(tick);
 
     return () => {
+      alive = false;
       cancelAnimationFrame(raf);
-      video.removeEventListener("loadedmetadata", onMeta);
+      if (video) video.removeEventListener("loadedmetadata", onMeta);
       if (tl.scrollTrigger) tl.scrollTrigger.kill();
       tl.kill();
     };
-  }, [staticMode, srcIdx]);
+  }, [staticMode, srcIdx, canvasMode, bundle]);
 
   return (
     <section
@@ -154,48 +235,59 @@ export const CinematicHero = () => {
         className="sticky top-0 h-screen w-full overflow-hidden bg-[#10170F]"
         style={{ height: "100svh" }}
       >
-        {!failed ? (
+        {/* Poster instantâneo sempre atrás (primeira pintura + fallback) */}
+        <img
+          src={bundle.poster}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        {canvasMode ? (
+          <canvas
+            ref={canvasRef}
+            width={bundle.frameSet === "desktop" ? 1280 : 720}
+            height={bundle.frameSet === "desktop" ? 720 : 1280}
+            className="absolute inset-0 h-full w-full object-cover"
+            aria-hidden="true"
+            data-testid="hero-canvas"
+          />
+        ) : !failed ? (
           <video
             ref={videoRef}
-            key={sources[srcIdx]}
+            key={bundle.sources[srcIdx]}
             className="absolute inset-0 h-full w-full object-cover"
-            src={sources[srcIdx]}
-            poster="/img/poster-first.jpg"
+            src={bundle.sources[srcIdx]}
+            poster={bundle.poster}
             muted
             playsInline
             preload="auto"
             disablePictureInPicture
             onError={() => {
-              if (srcIdx < sources.length - 1) setSrcIdx(srcIdx + 1);
+              if (srcIdx < bundle.sources.length - 1) setSrcIdx(srcIdx + 1);
               else setFailed(true);
             }}
             aria-hidden="true"
             tabIndex={-1}
             data-testid="hero-video"
           />
-        ) : (
-          <img
-            src="/img/poster-first.jpg"
-            alt="Família abraçada no playground do Quintal da Alegria"
-            className="absolute inset-0 h-full w-full object-cover"
-            data-testid="hero-fallback"
-          />
-        )}
+        ) : null}
 
         {/* Vinhetas de leitura */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-2/5 bg-gradient-to-t from-black/60 to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-3/5 bg-gradient-to-r from-black/50 to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-1/4 bg-gradient-to-b from-black/40 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-2/5 bg-gradient-to-t from-black/60 to-transparent max-sm:h-2/3 max-sm:from-black/70" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-3/5 bg-gradient-to-r from-black/50 to-transparent max-sm:w-full max-sm:from-black/35" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-1/4 bg-gradient-to-b from-black/40 to-transparent max-sm:h-1/3 max-sm:from-black/55" />
 
         {/* ESTÁGIO 01 — Hero */}
         <div ref={stage1Ref} className="absolute inset-0 z-20 flex items-center">
           <div className="mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-16">
             <div className="max-w-2xl">
-              <motion.div {...fadeUp(0.15)} className="flex items-center gap-3">
-                <LogoMark className="h-10 w-10 drop-shadow-lg lg:h-12 lg:w-12" />
-                <span className="font-display text-2xl font-black tracking-tight text-cream drop-shadow-lg lg:text-3xl">
-                  Vila<span className="text-sun">Família</span>
-                </span>
+              <motion.div {...fadeUp(0.15)}>
+                <img
+                  src="/img/logo-white.png"
+                  alt="Vila Família"
+                  className="h-12 w-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)] sm:h-14"
+                  data-testid="hero-logo"
+                />
               </motion.div>
 
               <motion.p

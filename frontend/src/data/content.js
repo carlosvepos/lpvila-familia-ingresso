@@ -17,7 +17,7 @@ export const EVENT = {
 
 export const HERO = {
   titleLine1: "Os pequenos brincam.",
-  titleLine2: "Os grandes também.",
+  titleLine2: "Os Adultos também.",
   subtitle:
     "Uma tarde para crianças e adultos viverem juntos uma experiência gostosa em família.",
   cta: "Quero participar",
@@ -65,13 +65,13 @@ export const KIDS = {
     "https://images.pexels.com/photos/2253883/pexels-photo-2253883.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
   imageAlt:
     "https://images.pexels.com/photos/5278823/pexels-photo-5278823.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  babyImage: "/img/kids-baby-space.webp",
+  structureImage: "/img/kids-structure.webp",
 };
 
 export const ADULTS = {
   eyebrow: "04 — Os adultos também aproveitam",
   title: "A diversão não é exclusividade de quem é pequeno.",
-  intro:
-    "Enquanto as crianças comandam o playground, a tarde dos adultos também foi pensada nos mínimos detalhes.",
   items: [
     "Jogos",
     "Desafios",
@@ -96,8 +96,7 @@ export const VENUE = {
     { icon: "wind", label: "Ambiente climatizado" },
     { icon: "coffee", label: "Comodidades para famílias" },
   ],
-  image:
-    "https://images.pexels.com/photos/17240976/pexels-photo-17240976.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  image: "/img/kids-structure.webp",
   imageAlt:
     "https://images.pexels.com/photos/15937644/pexels-photo-15937644.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
 };
@@ -106,42 +105,78 @@ export const TICKETS = {
   eyebrow: "06 — Ingressos",
   title: "Garanta o seu lugar no primeiro Vila.",
   intro:
-    "Vagas limitadas para manter a experiência leve e acolhedora para todo mundo.",
+    "Lotes limitados para manter a experiência leve e acolhedora para todo mundo. O 1º lote é exclusivo das 15 primeiras famílias.",
   cta: "Quero participar",
   note: "Você será direcionado ao site de inscrições.",
-  plans: [
+  lotes: [
     {
-      id: "adulto",
-      icon: "user",
-      name: "Adultos",
-      price: "R$ 110",
-      desc: "Entrada individual para viver o Vila inteiro.",
-      highlight: false,
-    },
-    {
-      id: "social",
-      icon: "heart",
-      name: "Ingresso social",
-      price: "R$ 105",
-      desc: "+ 1 kg de alimento não perecível.",
-      tag: "Mais solidário",
+      id: "lote1",
+      name: "1º lote",
+      tag: "15 primeiras famílias",
       highlight: true,
+      prices: [
+        { label: "Adulto", price: "R$ 105" },
+        { label: "Criança de 5 meses a 5 anos", price: "R$ 35" },
+        { label: "Criança a partir de 6 anos", price: "R$ 45" },
+      ],
     },
     {
-      id: "bebe",
+      id: "lote2",
+      name: "2º lote",
+      tag: "oficial",
+      highlight: false,
+      prices: [
+        { label: "Adulto", price: "R$ 125" },
+        { label: "Criança de 5 meses a 5 anos", price: "R$ 45" },
+        { label: "Criança a partir de 6 anos", price: "R$ 55" },
+      ],
+    },
+    {
+      id: "lote3",
+      name: "3º lote",
+      tag: "no dia",
+      highlight: false,
+      prices: [
+        { label: "Adulto", price: "R$ 150" },
+        { label: "Criança de 5 meses a 5 anos", price: "R$ 50" },
+        { label: "Criança a partir de 6 anos", price: "R$ 60" },
+      ],
+    },
+  ],
+  combos: [
+    {
+      id: "combo1",
+      name: "1 adulto + 1 criança até 5 anos",
+      lote1: "R$ 125",
+      lote2: "R$ 150",
+    },
+    {
+      id: "combo2",
+      name: "2 adultos + 1 criança até 5 anos",
+      lote1: "R$ 225",
+      lote2: "R$ 265",
+    },
+    {
+      id: "combo3",
+      name: "2 adultos + 1 criança até 5 anos + 1 criança acima de 6",
+      lote1: "R$ 250",
+      lote2: "R$ 310",
+    },
+  ],
+  rules: [
+    {
       icon: "baby",
-      name: "Crianças de 0 a 5 anos",
-      price: "R$ 30",
-      desc: "Pequenos com acompanhamento dos pais.",
-      highlight: false,
+      text: "Bebês de até 4 meses completos não pagam, pois não participam das atividades.",
     },
+    { icon: "ticket", text: "A cobrança infantil começa a partir dos 5 meses." },
     {
-      id: "kids6",
-      icon: "blocks",
-      name: "Crianças a partir de 6 anos",
-      price: "R$ 45",
-      desc: "Acesso completo às experiências infantis.",
-      highlight: false,
+      icon: "users",
+      text: "Famílias com mais crianças podem adquirir ingressos infantis avulsos adicionais ao combo.",
+    },
+    { icon: "clock", text: "O 1º lote é limitado às primeiras 15 famílias." },
+    {
+      icon: "info",
+      text: "Os combos consideram pelo menos uma criança pagante. Famílias apenas com bebês de até 4 meses podem adquirir ingressos individuais para os adultos.",
     },
   ],
 };
@@ -154,8 +189,15 @@ export const INVITE = {
 
 export const MARQUEE_ITEMS = [
   "Os pequenos brincam",
-  "Os grandes também",
+  "Os Adultos também",
   "1º Encontro Vila Família",
   "31 de outubro de 2026",
   "Quintal da Alegria",
 ];
+
+export const CONTACTS = {
+  instagram: "https://www.instagram.com/vilafamilia.vv/",
+  instagramLabel: "@vilafamilia.vv",
+  whatsapp: "https://wa.me/5527988595100",
+  whatsappLabel: "(27) 98859-5100",
+};
