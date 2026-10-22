@@ -36,6 +36,12 @@ export const Footer = () => (
             </span>
             {CONTACTS.whatsappLabel}
           </a>
+          <a
+            href="/politica-de-cancelamento"
+            className="mt-1 text-sm text-cream/70 underline decoration-cream/25 underline-offset-4 transition-colors hover:text-sun hover:decoration-sun"
+          >
+            Política de Cancelamento, Transferência e Reembolso
+          </a>
         </div>
         <p className="text-center text-sm leading-relaxed md:text-right">
           31 de outubro de 2026 · 14h às 18h

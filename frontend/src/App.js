@@ -13,6 +13,7 @@ import { VenueSection } from "./components/VenueSection";
 import { TicketsSection } from "./components/TicketsSection";
 import { InviteSection } from "./components/InviteSection";
 import { Footer } from "./components/Footer";
+import { CancellationPolicyPage } from "./components/CancellationPolicyPage";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -55,22 +56,36 @@ const SmoothScroll = () => {
 };
 
 function App() {
+  const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
+  const isCancellationPolicy = currentPath === "/politica-de-cancelamento";
+
   return (
     <ErrorBoundary>
-      <SmoothScroll />
-      <Cursor />
-      <div className="grain" aria-hidden="true" />
-      <Navbar />
-      <main className="bg-cream text-ink">
-        <CinematicHero />
-        <Marquee />
-        <KidsSection />
-        <AdultsSection />
-        <VenueSection />
-        <TicketsSection />
-        <InviteSection />
-      </main>
-      <Footer />
+      {isCancellationPolicy ? (
+        <>
+          <div className="grain" aria-hidden="true" />
+          <Navbar />
+          <CancellationPolicyPage />
+          <Footer />
+        </>
+      ) : (
+        <>
+          <SmoothScroll />
+          <Cursor />
+          <div className="grain" aria-hidden="true" />
+          <Navbar />
+          <main className="bg-cream text-ink">
+            <CinematicHero />
+            <Marquee />
+            <KidsSection />
+            <AdultsSection />
+            <VenueSection />
+            <TicketsSection />
+            <InviteSection />
+          </main>
+          <Footer />
+        </>
+      )}
     </ErrorBoundary>
   );
 }

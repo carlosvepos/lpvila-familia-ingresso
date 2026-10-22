@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/politica-de-cancelamento/:path*",
+      "destination": "/index.html"
+    }
+  ]
+}
