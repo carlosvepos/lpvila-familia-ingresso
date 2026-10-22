@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { CalendarDays } from "lucide-react";
-import { Logo } from "./Logo";
 import { EVENT } from "../data/content";
 import { scrollToId } from "../lib/scroll";
 
@@ -21,7 +20,12 @@ export const Navbar = () => (
         data-testid="navbar-logo-link"
         aria-label="Voltar ao topo"
       >
-        <Logo />
+        <img
+          src="/img/logo-green.png"
+          alt="Vila Família"
+          className="h-8 w-auto sm:h-9"
+          data-testid="navbar-logo"
+        />
       </a>
       <div className="flex items-center gap-3">
         <span className="hidden items-center gap-2 rounded-full bg-forest/[0.07] px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-forest md:flex">

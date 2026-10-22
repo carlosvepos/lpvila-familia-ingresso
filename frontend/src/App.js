@@ -13,6 +13,8 @@ import { VenueSection } from "./components/VenueSection";
 import { TicketsSection } from "./components/TicketsSection";
 import { InviteSection } from "./components/InviteSection";
 import { Footer } from "./components/Footer";
+import { CheckoutPage } from "./components/CheckoutPage";
+import { TICKETS } from "./data/content";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -55,6 +57,16 @@ const SmoothScroll = () => {
 };
 
 function App() {
+  const checkoutId = new URLSearchParams(window.location.search).get("checkout");
+  if (TICKETS.lotes.some((lote) => lote.id === checkoutId)) {
+    return (
+      <ErrorBoundary>
+        <CheckoutPage loteId={checkoutId} />
+        <Footer />
+      </ErrorBoundary>
+    );
+  }
+
   return (
     <ErrorBoundary>
       <SmoothScroll />
