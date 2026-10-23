@@ -106,7 +106,7 @@ export const TICKETS = {
   title: "Garanta o seu lugar no primeiro Vila.",
   intro:
     "Lotes limitados para manter a experiência leve e acolhedora para todo mundo. O 1º lote é exclusivo das 15 primeiras famílias.",
-  cta: "Quero participar",
+  cta: "Comprar Ingresso",
   note: "Você será direcionado ao site de inscrições.",
   lotes: [
     {
@@ -125,11 +125,6 @@ export const TICKETS = {
       name: "2º lote",
       tag: "oficial",
       highlight: false,
-      prices: [
-        { label: "Adulto", price: "R$ 125" },
-        { label: "Criança de 5 meses a 5 anos", price: "R$ 45" },
-        { label: "Criança a partir de 6 anos", price: "R$ 55" },
-      ],
     },
     {
       id: "lote3",

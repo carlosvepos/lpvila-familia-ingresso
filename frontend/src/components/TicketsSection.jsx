@@ -4,7 +4,7 @@ import { Reveal, MaskedLine } from "./Reveal";
 
 const RULE_ICONS = { baby: Baby, ticket: Ticket, users: Users, clock: Clock3, info: Info };
 
-export const CtaButton = ({ testid, className = "" }) => {
+export const CtaButton = ({ testid, label = TICKETS.cta, className = "" }) => {
   const href = TICKETS_URL || "/checkout";
   return (
     <a
@@ -14,7 +14,7 @@ export const CtaButton = ({ testid, className = "" }) => {
       data-testid={testid}
       className={`group inline-flex items-center gap-3 rounded-full bg-terra px-9 py-4 font-display text-base font-extrabold uppercase tracking-wide text-cream shadow-[0_18px_44px_-12px_rgba(195,90,66,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-forest ${className}`}
     >
-      {TICKETS.cta}
+      {label}
       <ArrowUpRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
     </a>
   );
@@ -63,7 +63,7 @@ export const TicketsSection = () => (
                     lote.highlight ? "bg-sun text-forest" : "bg-terra/10 text-terra"
                   } ${lote.id !== "lote3" ? "uppercase" : ""}`}
                 >
-                  {lote.tag}
+                  {lote.id === "lote3" ? "No dia do evento" : lote.tag}
                 </span>
               </div>
               {lote.id === "lote2" ? (
@@ -88,6 +88,9 @@ export const TicketsSection = () => (
                     </li>
                   ))}
                 </ul>
+              )}
+              {lote.id === "lote1" && (
+                <CtaButton testid="tickets-cta" className="mt-5 w-full justify-center" />
               )}
             </div>
           </Reveal>
@@ -142,15 +145,6 @@ export const TicketsSection = () => (
           );
         })}
       </div>
-
-      <Reveal delay={0.15}>
-        <div className="mt-14 flex flex-col items-center gap-3 text-center">
-          <CtaButton testid="tickets-cta" />
-          <p className="text-xs text-cocoa/70">
-            {TICKETS_URL ? TICKETS.note : "Confira as opções e continue sua inscrição pelo atendimento oficial."}
-          </p>
-        </div>
-      </Reveal>
     </div>
   </section>
 );

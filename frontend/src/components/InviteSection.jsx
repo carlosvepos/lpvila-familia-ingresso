@@ -1,5 +1,6 @@
 import { Reveal, MaskedLine } from "./Reveal";
 import { CtaButton } from "./TicketsSection";
+import { INVITE } from "../data/content";
 
 export const InviteSection = () => (
   <section className="relative bg-forest py-28 text-center sm:py-36" data-testid="section-invite">
@@ -20,7 +21,7 @@ export const InviteSection = () => (
       </Reveal>
       <Reveal delay={0.35}>
         <div className="mt-10">
-          <CtaButton testid="invite-cta" />
+          <CtaButton testid="invite-cta" label={INVITE.cta} />
         </div>
       </Reveal>
     </div>

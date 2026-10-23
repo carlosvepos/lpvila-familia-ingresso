@@ -1,0 +1,20 @@
+{
+  "rewrites": [
+    {
+      "source": "/checkout",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/checkout/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/politica-de-cancelamento",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/politica-de-cancelamento/:path*",
+      "destination": "/index.html"
+    }
+  ]
+}
