@@ -19,11 +19,11 @@ const currency = new Intl.NumberFormat("pt-BR", {
 const amountFromPrice = (price) => Number(String(price).replace(/\D/g, ""));
 
 const ticketGroups = TICKETS.lotes
-  .filter((lote) => lote.id !== "lote2")
+  .filter((lote) => lote.id === "lote1")
   .map((lote) => ({
     id: lote.id,
-    title: lote.id === "lote3" ? "No dia do evento" : lote.name,
-    subtitle: lote.id === "lote1" ? lote.tag : "Ingressos individuais",
+    title: lote.name,
+    subtitle: lote.tag,
     options: lote.prices.map((item, index) => ({
       id: `${lote.id}-individual-${index}`,
       name: item.label,
@@ -146,12 +146,6 @@ export const CheckoutPage = () => {
               ))}
             </div>
 
-            <div className="mt-5 rounded-2xl border border-terra/20 bg-terra/[0.05] p-5 sm:p-6">
-              <p className="font-display font-extrabold text-forest">2º lote oficial</p>
-              <p className="mt-1 text-sm leading-relaxed text-cocoa">
-                Para consultar a disponibilidade deste lote, fale com o atendimento oficial do Vila Família.
-              </p>
-            </div>
           </section>
 
           <section aria-labelledby="combos-title">
@@ -177,7 +171,7 @@ export const CheckoutPage = () => {
               ))}
             </div>
             <p className="mt-3 text-xs leading-relaxed text-cocoa/75">
-              Os valores de combos exibidos são do 1º lote. Consulte o atendimento para informações sobre outros lotes.
+              Os valores dos combos seguem as condições do 1º lote.
             </p>
           </section>
 
