@@ -106,7 +106,7 @@ export const CheckoutPage = () => {
         </div>
       </header>
 
-      <main className="mx-auto grid max-w-7xl gap-8 px-6 py-10 sm:px-10 sm:py-14 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-12 lg:px-16">
+      <main className="mx-auto grid max-w-7xl gap-8 px-6 py-10 pb-32 sm:px-10 sm:py-14 sm:pb-36 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-12 lg:px-16 lg:pb-14">
         <div className="space-y-10">
           <section aria-labelledby="individual-title">
             <div className="mb-5 flex items-center gap-3">
@@ -234,7 +234,7 @@ export const CheckoutPage = () => {
               href={whatsappHref}
               target="_blank"
               rel="noreferrer"
-              className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-terra px-5 py-4 text-center text-sm font-extrabold text-cream transition-all hover:-translate-y-0.5 hover:bg-forest"
+              className="mt-6 hidden w-full items-center justify-center gap-2 rounded-full bg-terra px-5 py-4 text-center text-sm font-extrabold text-cream transition-all hover:-translate-y-0.5 hover:bg-forest lg:inline-flex"
             >
               <MessageCircle className="h-5 w-5" aria-hidden="true" />
               Continuar pelo WhatsApp
@@ -244,7 +244,7 @@ export const CheckoutPage = () => {
             <button
               type="button"
               disabled
-              className="mt-6 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-full bg-ink/10 px-5 py-4 text-center text-sm font-extrabold text-cocoa/55"
+              className="mt-6 hidden w-full cursor-not-allowed items-center justify-center gap-2 rounded-full bg-ink/10 px-5 py-4 text-center text-sm font-extrabold text-cocoa/55 lg:inline-flex"
             >
               Selecione seus ingressos
             </button>
@@ -256,6 +256,43 @@ export const CheckoutPage = () => {
           </p>
         </aside>
       </main>
+      <div
+        className="fixed inset-x-0 bottom-0 z-50 border-t border-ink/10 bg-[#FFFDF8]/95 px-5 pt-3 shadow-[0_-12px_35px_-18px_rgba(51,38,29,0.45)] backdrop-blur lg:hidden"
+        style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}
+        data-testid="checkout-sticky-bar"
+      >
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
+          <div className="min-w-0">
+            <p className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-cocoa">Total</p>
+            <p className="truncate font-display text-2xl font-black leading-none text-forest" aria-live="polite">
+              {currency.format(total)}
+            </p>
+          </div>
+          {whatsappHref ? (
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Comprar ingressos, total ${currency.format(total)}`}
+              className="inline-flex min-w-[120px] items-center justify-center gap-2 rounded-full bg-terra px-6 py-3.5 text-sm font-extrabold text-cream shadow-lg transition hover:bg-forest"
+              data-testid="checkout-sticky-buy"
+            >
+              Comprar
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            </a>
+          ) : (
+            <button
+              type="button"
+              disabled
+              aria-label="Selecione ingressos para comprar"
+              className="inline-flex min-w-[120px] cursor-not-allowed items-center justify-center rounded-full bg-ink/10 px-6 py-3.5 text-sm font-extrabold text-cocoa/55"
+              data-testid="checkout-sticky-buy"
+            >
+              Comprar
+            </button>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
