@@ -15,6 +15,7 @@ import { InviteSection } from "./components/InviteSection";
 import { Footer } from "./components/Footer";
 import { CancellationPolicyPage } from "./components/CancellationPolicyPage";
 import { CheckoutPage } from "./components/CheckoutPage";
+import { TermsConditionsPage } from "./components/TermsConditionsPage";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -59,17 +60,19 @@ const SmoothScroll = () => {
 function App() {
   const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
   const isCancellationPolicy = currentPath === "/politica-de-cancelamento";
+  const isTermsConditions = currentPath === "/termos-e-condicoes";
+  const isPolicyPage = isCancellationPolicy || isTermsConditions;
   const isCheckout = currentPath === "/checkout";
 
   return (
     <ErrorBoundary>
       {isCheckout ? (
         <CheckoutPage />
-      ) : isCancellationPolicy ? (
+      ) : isPolicyPage ? (
         <>
           <div className="grain" aria-hidden="true" />
           <Navbar />
-          <CancellationPolicyPage />
+          {isTermsConditions ? <TermsConditionsPage /> : <CancellationPolicyPage />}
           <Footer />
         </>
       ) : (

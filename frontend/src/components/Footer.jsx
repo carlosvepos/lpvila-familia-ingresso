@@ -42,6 +42,12 @@ export const Footer = () => (
           >
             Política de Cancelamento, Transferência e Reembolso
           </a>
+          <a
+            href="/termos-e-condicoes"
+            className="text-sm text-cream/70 underline decoration-cream/25 underline-offset-4 transition-colors hover:text-sun hover:decoration-sun"
+          >
+            Termo de Condições de Participação e Regulamento do Evento
+          </a>
         </div>
         <p className="text-center text-sm leading-relaxed md:text-right">
           {EVENT.date} · {EVENT.time}
