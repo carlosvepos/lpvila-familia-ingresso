@@ -155,15 +155,24 @@ export const CancellationPolicyPage = () => {
               </p>
             </div>
           </div>
-          <a
-            href={CONTACTS.whatsapp}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-sun px-5 py-3 text-sm font-extrabold text-forest transition-colors hover:bg-cream"
-          >
-            Falar com o Vila Família
-            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-          </a>
+          <div className="flex w-full shrink-0 flex-col gap-3 sm:w-auto">
+            <a
+              href="/checkout"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-sun px-5 py-3 text-sm font-extrabold text-forest transition-colors hover:bg-cream"
+            >
+              Voltar ao checkout
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            </a>
+            <a
+              href={CONTACTS.whatsapp}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-cream/25 px-5 py-3 text-sm font-bold text-cream transition-colors hover:border-sun hover:text-sun"
+            >
+              Falar com o Vila Família
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            </a>
+          </div>
         </aside>
       </main>
     </div>
