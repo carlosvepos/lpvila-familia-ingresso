@@ -60,10 +60,8 @@ export const KIDS = {
       desc: "Playground, jogos e cantos de exploração para todas as idades.",
     },
   ],
-  image:
-    "https://images.pexels.com/photos/2253883/pexels-photo-2253883.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-  imageAlt:
-    "https://images.pexels.com/photos/5278823/pexels-photo-5278823.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  recreationImage: "/img/kids-recreation-activity.png",
+  monitoringImage: "/img/kids-monitoring.png",
   babyImage: "/img/kids-baby-space.webp",
   structureImage: "/img/kids-structure.webp",
 };
@@ -95,7 +93,7 @@ export const VENUE = {
     { icon: "wind", label: "Ambiente climatizado" },
     { icon: "coffee", label: "Comodidades para famílias" },
   ],
-  image: "/img/kids-structure.webp",
+  image: "/img/venue-quintal.png",
   imageAlt:
     "https://images.pexels.com/photos/15937644/pexels-photo-15937644.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
 };

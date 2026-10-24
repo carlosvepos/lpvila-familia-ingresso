@@ -7,11 +7,8 @@ import { Reveal, MaskedLine } from "./Reveal";
 
 const ICONS = { blocks: Blocks, heart: HeartHandshake, baby: Baby, puzzle: Puzzle };
 const VISUALS = [
-  {
-    src: "/img/kids-recreation-net.webp",
-    alt: "Criança atravessando uma ponte suspensa na recreação",
-  },
-  { src: KIDS.image, alt: "Crianças se divertindo no playground" },
+  { src: KIDS.recreationImage, alt: "Crianças participando de uma atividade de recreação" },
+  { src: KIDS.monitoringImage, alt: "Equipe realizando atividades com as crianças" },
   { src: KIDS.babyImage, alt: "Espaço Baby seguro e acolhedor para os pequenos" },
   { src: KIDS.structureImage, alt: "Estrutura infantil para brincar e explorar" },
 ];
