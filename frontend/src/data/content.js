@@ -37,17 +37,17 @@ export const KIDS = {
   eyebrow: "03 — Experiências para crianças",
   title: "Feito para eles brincarem sem parar.",
   intro:
-    "Uma estrutura completa pensada para cada idade: diversão com segurança, do começo ao fim da tarde.",
+    "Uma estrutura completa pensada para cada idade: diversão com segurança, do começo ao fim da manhã.",
   items: [
     {
       icon: "blocks",
       title: "Recreação",
-      desc: "Brincadeiras dirigidas para manter a energia lá em cima a tarde inteira.",
+      desc: "Brincadeiras dirigidas para manter a energia lá em cima a manhã inteira.",
     },
     {
       icon: "heart",
       title: "Monitoria",
-      desc: "Equipe presente cuidando de cada criança do início ao fim do encontro.",
+      desc: "Equipe presente cuidando de cada criança em momentos pontuais.",
     },
     {
       icon: "baby",
