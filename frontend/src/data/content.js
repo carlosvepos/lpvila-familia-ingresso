@@ -4,8 +4,7 @@
 
 // URL oficial de inscrição do primeiro lote. Os CTAs de participação e ingresso
 // e a rota interna /checkout direcionam o visitante para este endereço.
-export const TICKETS_URL =
-  "https://evento.vilafamilia.com.br/primeiro-lote?full_name={{contact.name}}&email={{contact.email}}&phone={{contact.phone_raw}}";
+export const TICKETS_URL = "https://evento.vilafamilia.com.br/primeiro-lote";
 
 export const EVENT = {
   name: "1º Encontro Vila Família",
