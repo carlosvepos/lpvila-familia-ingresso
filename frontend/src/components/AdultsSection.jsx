@@ -233,7 +233,7 @@ const AdultsDesktopSection = () => {
 
         <div ref={momentsRef} style={{ opacity: 0 }} className="absolute inset-x-0 bottom-0 z-20 pb-24">
           <div className="mx-auto max-w-7xl px-10 lg:px-16">
-            <p className="mb-5 text-sm font-extrabold uppercase tracking-[0.28em] text-sun">Uma tarde pensada para aproveitar junto</p>
+            <p className="mb-5 text-sm font-extrabold uppercase tracking-[0.28em] text-sun">Uma manhã pensada para aproveitar junto</p>
             <ActivityChips />
             <p className="mt-5 font-hand text-2xl text-cream drop-shadow">Enquanto os pequenos exploram, a sua hora de relaxar também chega.</p>
           </div>
@@ -282,7 +282,7 @@ const AdultsMobileSection = () => {
         </div>
 
         <div ref={momentsRef} style={{ opacity: 0 }} className="absolute inset-x-0 bottom-0 z-20 px-5 pb-16">
-          <p className="mb-3 text-[10px] font-extrabold uppercase tracking-[0.2em] text-sun">Uma tarde para aproveitar junto</p>
+          <p className="mb-3 text-[10px] font-extrabold uppercase tracking-[0.2em] text-sun">Uma manhã para aproveitar junto</p>
           <ActivityChips mobile />
           <p className="mt-3 font-hand text-lg leading-tight text-cream drop-shadow">Enquanto os pequenos exploram, sua hora de relaxar também chega.</p>
         </div>

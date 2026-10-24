@@ -18,7 +18,7 @@ export const HERO = {
   titleLine1: "Os pequenos brincam.",
   titleLine2: "Os Adultos também.",
   subtitle:
-    "Uma tarde para crianças e adultos viverem juntos uma experiência gostosa em família.",
+    "Uma manhã para crianças e adultos viverem juntos uma experiência gostosa em família.",
   cta: "Quero participar",
 };
 
@@ -87,7 +87,7 @@ export const VENUE = {
   eyebrow: "05 — O espaço",
   title: "Quintal da Alegria",
   subtitle:
-    "Um endereço feito para famílias: área externa ampla, ambiente climatizado e todas as comodidades para a tarde fluir leve.",
+    "Um endereço feito para famílias: área externa ampla, ambiente climatizado e todas as comodidades para a manhã fluir leve.",
   features: [
     { icon: "sun", label: "Área externa ampla" },
     { icon: "wind", label: "Ambiente climatizado" },
