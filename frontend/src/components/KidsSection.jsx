@@ -60,7 +60,7 @@ export const KidsSection = () => {
         </div>
 
         <div className="mt-14 grid gap-6 lg:grid-cols-12">
-          <div className="lg:col-span-7">
+          <div className="hidden lg:col-span-7 lg:block">
             <div className="lg:sticky lg:top-24">
               <div className="group relative h-[320px] overflow-hidden rounded-[40px] bg-forest sm:h-[460px]">
                 {VISUALS.map((visual, index) => (
