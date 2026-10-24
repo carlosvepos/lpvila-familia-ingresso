@@ -112,9 +112,9 @@ export const TICKETS = {
       tag: "15 primeiras famílias",
       highlight: true,
       prices: [
-        { label: "Adulto", price: "R$ 105" },
-        { label: "Criança de 5 meses a 5 anos", price: "R$ 35" },
-        { label: "Criança a partir de 6 anos", price: "R$ 45" },
+        { label: "Adulto", price: "R$ 110" },
+        { label: "Criança de 5 meses a 5 anos", price: "R$ 40" },
+        { label: "Criança a partir de 6 anos", price: "R$ 50" },
       ],
     },
     {
@@ -129,9 +129,9 @@ export const TICKETS = {
       tag: "No dia do Evento",
       highlight: false,
       prices: [
-        { label: "Adulto", price: "R$ 150" },
-        { label: "Criança de 5 meses a 5 anos", price: "R$ 50" },
-        { label: "Criança a partir de 6 anos", price: "R$ 60" },
+        { label: "Adulto", price: "R$ 155" },
+        { label: "Criança de 5 meses a 5 anos", price: "R$ 55" },
+        { label: "Criança a partir de 6 anos", price: "R$ 65" },
       ],
     },
   ],
@@ -139,20 +139,20 @@ export const TICKETS = {
     {
       id: "combo1",
       name: "1 adulto + 1 criança até 5 anos",
-      lote1: "R$ 125",
-      lote2: "R$ 150",
+      lote1: "R$ 130",
+      lote2: "R$ 155",
     },
     {
       id: "combo2",
       name: "2 adultos + 1 criança até 5 anos",
-      lote1: "R$ 225",
-      lote2: "R$ 265",
+      lote1: "R$ 230",
+      lote2: "R$ 270",
     },
     {
       id: "combo3",
       name: "2 adultos + 1 criança até 5 anos + 1 criança acima de 6",
-      lote1: "R$ 250",
-      lote2: "R$ 310",
+      lote1: "R$ 255",
+      lote2: "R$ 315",
     },
   ],
   rules: [
