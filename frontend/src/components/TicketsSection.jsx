@@ -9,8 +9,6 @@ export const CtaButton = ({ testid, label = TICKETS.cta, className = "" }) => {
   return (
     <a
       href={href || "#"}
-      target={TICKETS_URL ? "_blank" : undefined}
-      rel={TICKETS_URL ? "noreferrer" : undefined}
       data-testid={testid}
       className={`group inline-flex items-center gap-3 rounded-full bg-terra px-9 py-4 font-display text-base font-extrabold uppercase tracking-wide text-cream shadow-[0_18px_44px_-12px_rgba(195,90,66,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-forest ${className}`}
     >

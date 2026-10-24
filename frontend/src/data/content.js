@@ -2,10 +2,9 @@
 // CONTEÚDO DO SITE — 1º Encontro Vila Família
 // ─────────────────────────────────────────────────────────────
 
-// ⚙️ URL DE COMPRA DOS INGRESSOS — será fornecida.
-// Configure aqui (ex.: "https://ingressos.vilafamilia.com.br"). Enquanto vazia,
-// os botões não navegam para fora da página.
-export const TICKETS_URL = "";
+// URL oficial de inscrição do primeiro lote. Os CTAs de participação e ingresso
+// e a rota interna /checkout direcionam o visitante para este endereço.
+export const TICKETS_URL = "https://evento.vilafamilia.com.br/primeiro-lote";
 
 export const EVENT = {
   name: "1º Encontro Vila Família",

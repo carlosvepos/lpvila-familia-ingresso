@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
 import { CalendarDays } from "lucide-react";
-import { EVENT } from "../data/content";
+import { EVENT, TICKETS_URL } from "../data/content";
 import { scrollToId } from "../lib/scroll";
 
 export const Navbar = () => {
   const isLandingPage = typeof window === "undefined" || window.location.pathname === "/";
   const homeHref = isLandingPage ? "#topo" : "/#topo";
-  const ticketsHref = isLandingPage ? "#ingressos" : "/#ingressos";
+  const ticketsHref = TICKETS_URL || (isLandingPage ? "#ingressos" : "/#ingressos");
 
   return (
     <motion.header
@@ -42,7 +42,7 @@ export const Navbar = () => {
           <a
             href={ticketsHref}
             onClick={(event) => {
-              if (isLandingPage) {
+              if (!TICKETS_URL && isLandingPage) {
                 event.preventDefault();
                 scrollToId("#ingressos");
               }

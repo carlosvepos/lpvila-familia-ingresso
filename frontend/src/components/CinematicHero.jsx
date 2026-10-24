@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
 import {
-  ArrowDown,
+  ArrowUpRight,
   CalendarDays,
   Clock,
   MapPin,
@@ -11,8 +11,7 @@ import {
   Coffee,
   Heart,
 } from "lucide-react";
-import { HERO, EVENT, STAGE_FOUR } from "../data/content";
-import { scrollToId } from "../lib/scroll";
+import { HERO, EVENT, STAGE_FOUR, TICKETS_URL } from "../data/content";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -330,14 +329,14 @@ export const CinematicHero = () => {
               </motion.ul>
 
               <motion.div {...fadeUp(1.06)}>
-                <button
-                  onClick={() => scrollToId("#ingressos")}
+                <a
+                  href={TICKETS_URL || "/checkout"}
                   data-testid="hero-cta-quero-participar"
                   className="group mt-8 inline-flex items-center gap-3 rounded-full bg-terra px-8 py-4 font-display text-base font-extrabold uppercase tracking-wide text-cream shadow-[0_18px_44px_-12px_rgba(195,90,66,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-sun hover:text-forest sm:text-lg"
                 >
                   {HERO.cta}
-                  <ArrowDown className="h-5 w-5 transition-transform duration-300 group-hover:translate-y-0.5" />
-                </button>
+                  <ArrowUpRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
               </motion.div>
             </div>
           </div>

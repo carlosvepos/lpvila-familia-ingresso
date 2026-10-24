@@ -64,12 +64,7 @@ function App() {
   return (
     <ErrorBoundary>
       {isCheckout ? (
-        <>
-          <div className="grain" aria-hidden="true" />
-          <Navbar />
-          <CheckoutPage />
-          <Footer />
-        </>
+        <CheckoutPage />
       ) : isCancellationPolicy ? (
         <>
           <div className="grain" aria-hidden="true" />
