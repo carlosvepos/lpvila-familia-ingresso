@@ -63,7 +63,7 @@ export const TicketsSection = () => (
                     lote.highlight ? "bg-sun text-forest" : "bg-terra/10 text-terra"
                   } ${lote.id !== "lote3" ? "uppercase" : ""}`}
                 >
-                  {lote.id === "lote3" ? "No dia do evento" : lote.tag}
+                  {lote.tag}
                 </span>
               </div>
               {lote.id === "lote2" ? (

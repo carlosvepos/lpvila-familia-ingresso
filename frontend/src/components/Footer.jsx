@@ -1,5 +1,5 @@
 import { Instagram, MessageCircle } from "lucide-react";
-import { CONTACTS } from "../data/content";
+import { CONTACTS, EVENT } from "../data/content";
 
 export const Footer = () => (
   <footer className="bg-forestdark py-12 text-cream/60" data-testid="footer">
@@ -44,8 +44,8 @@ export const Footer = () => (
           </a>
         </div>
         <p className="text-center text-sm leading-relaxed md:text-right">
-          31 de outubro de 2026 · 14h às 18h
-          <br className="md:hidden" /> · Quintal da Alegria — Itaparica, Vila Velha/ES
+          {EVENT.date} · {EVENT.time}
+          <br className="md:hidden" /> · {EVENT.place}
         </p>
       </div>
       <p className="mt-10 border-t border-cream/10 pt-6 text-center text-xs">

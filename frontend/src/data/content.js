@@ -9,9 +9,9 @@ export const TICKETS_URL = "";
 
 export const EVENT = {
   name: "1º Encontro Vila Família",
-  date: "31 de outubro de 2026",
-  dateShort: "31 OUT 2026",
-  time: "14h às 18h",
+  date: "15 de novembro de 2026",
+  dateShort: "15 NOV 2026",
+  time: "10h às 14h",
   place: "Quintal da Alegria — Itaparica, Vila Velha/ES",
 };
 
@@ -129,7 +129,7 @@ export const TICKETS = {
     {
       id: "lote3",
       name: "3º lote",
-      tag: "No dia do evento",
+      tag: "No dia do Evento",
       highlight: false,
       prices: [
         { label: "Adulto", price: "R$ 150" },
@@ -186,7 +186,7 @@ export const MARQUEE_ITEMS = [
   "Os pequenos brincam",
   "Os Adultos também",
   "1º Encontro Vila Família",
-  "31 de outubro de 2026",
+  "15 de novembro de 2026",
   "Quintal da Alegria",
 ];
 

@@ -1,6 +1,6 @@
 import { Reveal, MaskedLine } from "./Reveal";
 import { CtaButton } from "./TicketsSection";
-import { INVITE } from "../data/content";
+import { EVENT, INVITE } from "../data/content";
 
 export const InviteSection = () => (
   <section className="relative bg-forest py-28 text-center sm:py-36" data-testid="section-invite">
@@ -16,7 +16,7 @@ export const InviteSection = () => (
       </h2>
       <Reveal delay={0.25}>
         <p className="mx-auto mt-6 max-w-lg text-base leading-relaxed text-cream/70 sm:text-lg">
-          31 de outubro de 2026 · 14h às 18h · Quintal da Alegria — Itaparica, Vila Velha/ES
+          {EVENT.date} · {EVENT.time} · {EVENT.place}
         </p>
       </Reveal>
       <Reveal delay={0.35}>
