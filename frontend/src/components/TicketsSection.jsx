@@ -44,7 +44,7 @@ export const TicketsSection = () => (
         </h3>
       </Reveal>
       <div className="mt-6 grid gap-5 md:grid-cols-3">
-        {TICKETS.lotes.map((lote, i) => (
+        {TICKETS.lotes.filter((lote) => lote.id === "lote1").map((lote, i) => (
           <Reveal key={lote.id} delay={i * 0.08} className="h-full">
             <div
               data-testid={`tickets-card-${lote.id}`}
