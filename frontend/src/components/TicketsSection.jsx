@@ -87,6 +87,30 @@ export const TicketsSection = () => (
             </div>
           </Reveal>
         ))}
+        <Reveal delay={0.12} className="h-full md:col-span-2">
+          <aside
+            data-testid="tickets-urgency"
+            className="flex h-full min-h-[280px] flex-col items-start justify-between gap-8 rounded-[28px] border border-terra/15 bg-[#FFFDF8] p-7 shadow-[0_24px_50px_-34px_rgba(51,38,29,0.35)] sm:p-9 lg:p-11"
+          >
+            <div>
+              <span className="inline-flex items-center gap-2 rounded-full bg-sun px-4 py-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-forest">
+                <Clock3 className="h-4 w-4" />
+                2º lote em andamento
+              </span>
+              <h4 className="mt-6 max-w-xl font-display text-3xl font-black leading-tight tracking-tight text-forest sm:text-4xl">
+                O 2º lote está valendo.
+              </h4>
+              <p className="mt-3 max-w-lg text-base leading-relaxed text-cocoa sm:text-lg">
+                Aproveite os valores atuais antes da próxima virada.
+              </p>
+            </div>
+            <CtaButton
+              label="Garantir meu ingresso"
+              testid="tickets-urgency-cta"
+              className="w-full justify-center sm:w-auto"
+            />
+          </aside>
+        </Reveal>
       </div>
 
       <Reveal>
