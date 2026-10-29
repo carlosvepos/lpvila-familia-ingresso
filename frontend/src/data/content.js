@@ -102,7 +102,7 @@ export const TICKETS = {
   eyebrow: "06 — Ingressos",
   title: "Garanta o seu lugar no primeiro Vila.",
   intro:
-    "Lotes limitados para manter a experiência leve e acolhedora para todo mundo. O 1º lote é exclusivo das 15 primeiras famílias.",
+    "As vendas estão no 2º lote. Garanta a participação da sua família no Vila Experiências.",
   cta: "Comprar Ingresso",
   note: "Você será direcionado ao site de inscrições.",
   lotes: [
@@ -121,7 +121,12 @@ export const TICKETS = {
       id: "lote2",
       name: "2º lote",
       tag: "oficial",
-      highlight: false,
+      highlight: true,
+      prices: [
+        { label: "Adulto", price: "R$ 120" },
+        { label: "Criança de 0 a 5 anos", price: "R$ 50" },
+        { label: "Criança a partir de 6 anos", price: "R$ 60" },
+      ],
     },
     {
       id: "lote3",
@@ -140,19 +145,19 @@ export const TICKETS = {
       id: "combo1",
       name: "1 adulto + 1 criança até 5 anos",
       lote1: "R$ 130",
-      lote2: "R$ 155",
+      lote2: "R$ 150",
     },
     {
       id: "combo2",
       name: "2 adultos + 1 criança até 5 anos",
       lote1: "R$ 230",
-      lote2: "R$ 270",
+      lote2: "R$ 250",
     },
     {
       id: "combo3",
       name: "2 adultos + 1 criança até 5 anos + 1 criança acima de 6",
       lote1: "R$ 255",
-      lote2: "R$ 315",
+      lote2: "R$ 300",
     },
   ],
   rules: [
@@ -165,7 +170,7 @@ export const TICKETS = {
       icon: "users",
       text: "Famílias com mais crianças podem adquirir ingressos infantis avulsos adicionais ao combo.",
     },
-    { icon: "clock", text: "O 1º lote é limitado às primeiras 15 famílias." },
+    { icon: "clock", text: "Valores exibidos válidos para o 2º lote." },
     {
       icon: "info",
       text: "Os combos consideram pelo menos uma criança pagante. Famílias apenas com bebês de até 4 meses podem adquirir ingressos individuais para os adultos.",

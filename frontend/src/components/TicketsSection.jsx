@@ -44,7 +44,7 @@ export const TicketsSection = () => (
         </h3>
       </Reveal>
       <div className="mt-6 grid gap-5 md:grid-cols-3">
-        {TICKETS.lotes.filter((lote) => lote.id === "lote1").map((lote, i) => (
+        {TICKETS.lotes.filter((lote) => lote.id === "lote2").map((lote, i) => (
           <Reveal key={lote.id} delay={i * 0.08} className="h-full">
             <div
               data-testid={`tickets-card-${lote.id}`}
@@ -64,30 +64,24 @@ export const TicketsSection = () => (
                   {lote.tag}
                 </span>
               </div>
-              {lote.id === "lote2" ? (
-                <p className="mt-6 flex-1 border-t border-ink/[0.07] pt-4 text-sm leading-relaxed text-cocoa">
-                  Consulte o atendimento para verificar os valores e a disponibilidade deste lote.
-                </p>
-              ) : (
-                <ul className="mt-6 flex-1">
-                  {lote.prices.map((p) => (
-                    <li
-                      key={p.label}
-                      className={`flex items-baseline justify-between gap-3 border-t py-3.5 ${
-                        lote.highlight ? "border-cream/15" : "border-ink/[0.07]"
-                      }`}
-                    >
-                      <span className={`text-sm ${lote.highlight ? "text-cream/75" : "text-cocoa"}`}>
-                        {p.label}
-                      </span>
-                      <span className="font-display text-2xl font-black tracking-tight">
-                        {p.price}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {lote.id === "lote1" && (
+              <ul className="mt-6 flex-1">
+                {lote.prices.map((p) => (
+                  <li
+                    key={p.label}
+                    className={`flex items-baseline justify-between gap-3 border-t py-3.5 ${
+                      lote.highlight ? "border-cream/15" : "border-ink/[0.07]"
+                    }`}
+                  >
+                    <span className={`text-sm ${lote.highlight ? "text-cream/75" : "text-cocoa"}`}>
+                      {p.label}
+                    </span>
+                    <span className="font-display text-2xl font-black tracking-tight">
+                      {p.price}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              {lote.id === "lote2" && (
                 <CtaButton testid="tickets-cta" className="mt-5 w-full justify-center" />
               )}
             </div>
@@ -113,9 +107,9 @@ export const TicketsSection = () => (
               <div className="flex flex-wrap items-center gap-2.5">
                 <span className="inline-flex items-baseline gap-2 rounded-full bg-terra px-4 py-2 text-cream">
                   <span className="text-[10px] font-extrabold uppercase tracking-[0.12em] opacity-80">
-                    1º lote
+                    2º lote
                   </span>
-                  <span className="font-display text-lg font-black">{combo.lote1}</span>
+                  <span className="font-display text-lg font-black">{combo.lote2}</span>
                 </span>
               </div>
             </div>
